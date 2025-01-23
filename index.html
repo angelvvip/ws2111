@@ -42,21 +42,38 @@
         button:hover {
             background-color: #0056b3;
         }
+        .time-display {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px 0;
+            font-size: 1.2em;
+            color: #555;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 10px;
+        }
         @media (max-width: 600px) {
             .container {
                 padding: 15px;
+            }
+            .time-display {
+                flex-direction: column;
+                align-items: center;
             }
         }
     </style>
 </head>
 <body>
+    <div class="time-display">
+        <p>UTC Time: <span id="utcTime"></span></p>
+        <p>Local Server Time: <span id="localTime"></span></p>
+    </div>
     <div class="container">
         <h1>Server NAP Information</h1>
         <p><strong>NAP4 Alliances:</strong> LED, EMA, POL, KOR</p>
         <p><strong>Minister of the Interior:</strong> Assigned to POL for testing purposes. This will remain under observation to ensure effective title distribution.</p>
         <h2>NAP Rules</h2>
         <ul>
-            <li>NAP4 alliances are protected from attacks outside of Killing Events.</li>
+            <li>NAP4 alliances are protected from attacks outside of Killing Events.(KE can only attack farm, not city)</li>
             <li>Title distribution will be shared fairly, with POL managing the Minister of the Interior role for now.</li>
             <li>During SvS, collaboration among NAP alliances is encouraged to strengthen server performance.</li>
         </ul>
@@ -65,25 +82,42 @@
         <textarea id="inputText" placeholder="Enter your message here..."></textarea>
         <button onclick="generateRainbowText()">Generate Rainbow Text</button>
         <textarea id="outputText" readonly placeholder="Your BB code will appear here..."></textarea>
+        <div id="preview" style="margin-top: 10px; text-align: center;"></div>
     </div>
     <script>
+        function updateTime() {
+            const now = new Date();
+            const utcTime = now.toUTCString().split(' ')[4];
+            const localTime = now.toLocaleTimeString();
+
+            document.getElementById('localTime').innerText = localTime;
+            document.getElementById('utcTime').innerText = utcTime;
+        }
+
+        setInterval(updateTime, 1000);
+
         function generateRainbowText() {
             const input = document.getElementById('inputText').value;
-            const colors = ['ff0000', 'ff7f00', 'ffff00', '00ff00', '0000ff', '4b0082', '8b00ff'];
+            const colors = ['FF0000', 'FF7F00', 'FFFF00', '00FF00', '0000FF', '4B0082', '8B00FF'];
             let colorIndex = 0;
             let result = '';
+            let preview = '';
 
             for (let char of input) {
-                if (char.trim() === '') {
-                    result += char;
-                } else {
-                    result += `<color=#${colors[colorIndex]}><b>${char}</b></color>`;
-                    colorIndex = (colorIndex + 1) % colors.length;
-                }
+                if (result.length >= 20) break; // Limit to 20 characters
+                if (char.trim() === '') continue; // Skip spaces
+
+                const color = `#${colors[colorIndex]}`;
+                result += `<color=${color}><b>${char}</b></color>`;
+                preview += `<span style="color:${color}; font-weight:bold;">${char}</span>`;
+                colorIndex = (colorIndex + 1) % colors.length;
             }
 
             document.getElementById('outputText').value = result;
+            document.getElementById('preview').innerHTML = preview;
         }
+
+        updateTime();
     </script>
 </body>
 </html>
