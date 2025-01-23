@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Server NAP Information</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        header {
+            background-color: #6200ea;
+            color: white;
+            padding: 1em 0;
+            text-align: center;
+        }
+        main {
+            padding: 2em;
+        }
+        section {
+            margin-bottom: 2em;
+        }
+        .time-display {
+            margin-top: 1em;
+            font-size: 1.2em;
+        }
+        footer {
+            text-align: center;
+            padding: 1em 0;
+            background-color: #6200ea;
+            color: white;
+        }
+        .rainbow {
+            font-weight: bold;
+            animation: rainbow 3s infinite;
+        }
+        @keyframes rainbow {
+            0% { color: red; }
+            16% { color: orange; }
+            33% { color: yellow; }
+            50% { color: green; }
+            66% { color: blue; }
+            83% { color: indigo; }
+            100% { color: violet; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Server NAP Information</h1>
+    </header>
+    <main>
+        <section>
+            <h2>What is NAP?</h2>
+            <p>NAP stands for Non-Aggression Pact, an agreement between alliances to ensure cooperation and avoid unnecessary conflicts. This helps our server grow and maintain a fun and fair environment for everyone.</p>
+        </section>
+        <section>
+            <h2>Current NAP Members</h2>
+            <ul>
+                <li>LED</li>
+                <li>EMA</li>
+                <li>POL</li>
+                <li>KOR</li>
+            </ul>
+        </section>
+        <section>
+            <h2>NAP Rules</h2>
+            <ul>
+                <li>Respect the NAP agreement by avoiding attacks on listed alliances.</li>
+                <li>Title sharing should be done fairly among all NAP alliances.</li>
+                <li>During SvS events, coordination between NAP members is crucial for maximum effectiveness.</li>
+                <li>SFC battles: Limited to turret PvP for participation rewards; castle rotation between LED and EMA.</li>
+            </ul>
+        </section>
+        <section>
+            <h2>Current Server Time</h2>
+            <p id="localTime" class="time-display">Local Time: Loading...</p>
+            <p id="utcTime" class="time-display">UTC Time: Loading...</p>
+        </section>
+        <section>
+            <h2>Rainbow Text Generator</h2>
+            <label for="rainbowInput">Enter text:</label>
+            <input type="text" id="rainbowInput" placeholder="Type something...">
+            <p id="rainbowOutput" class="rainbow"></p>
+        </section>
+    </main>
+    <footer>
+        <p>Managed by LED Leadership</p>
+    </footer>
+    <script>
+        function updateTime() {
+            const now = new Date();
+
+            // Local time
+            const localTime = now.toLocaleString();
+            document.getElementById('localTime').textContent = `Local Time: ${localTime}`;
+
+            // UTC time
+            const utcTime = now.toUTCString();
+            document.getElementById('utcTime').textContent = `UTC Time: ${utcTime}`;
+        }
+
+        setInterval(updateTime, 1000);
+
+        const rainbowInput = document.getElementById('rainbowInput');
+        const rainbowOutput = document.getElementById('rainbowOutput');
+
+        rainbowInput.addEventListener('input', () => {
+            rainbowOutput.textContent = rainbowInput.value;
+        });
+    </script>
+</body>
+</html>
