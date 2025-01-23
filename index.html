@@ -9,109 +9,81 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f9;
+            line-height: 1.6;
             color: #333;
+            background-color: #f9f9f9;
         }
-        header {
-            background-color: #6200ea;
-            color: white;
-            padding: 1em 0;
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        h1, h2 {
             text-align: center;
+            color: #444;
         }
-        main {
-            padding: 2em;
+        textarea, input, button {
+            width: 100%;
+            margin-top: 10px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
         }
-        section {
-            margin-bottom: 2em;
-        }
-        .time-display {
-            margin-top: 1em;
-            font-size: 1.2em;
-        }
-        footer {
-            text-align: center;
-            padding: 1em 0;
-            background-color: #6200ea;
+        button {
+            background-color: #007BFF;
             color: white;
+            border: none;
+            cursor: pointer;
         }
-        .rainbow {
-            font-weight: bold;
-            animation: rainbow 3s infinite;
+        button:hover {
+            background-color: #0056b3;
         }
-        @keyframes rainbow {
-            0% { color: red; }
-            16% { color: orange; }
-            33% { color: yellow; }
-            50% { color: green; }
-            66% { color: blue; }
-            83% { color: indigo; }
-            100% { color: violet; }
+        @media (max-width: 600px) {
+            .container {
+                padding: 15px;
+            }
         }
     </style>
 </head>
 <body>
-    <header>
+    <div class="container">
         <h1>Server NAP Information</h1>
-    </header>
-    <main>
-        <section>
-            <h2>What is NAP?</h2>
-            <p>NAP stands for Non-Aggression Pact, an agreement between alliances to ensure cooperation and avoid unnecessary conflicts. This helps our server grow and maintain a fun and fair environment for everyone.</p>
-        </section>
-        <section>
-            <h2>Current NAP Members</h2>
-            <ul>
-                <li>LED</li>
-                <li>EMA</li>
-                <li>POL</li>
-                <li>KOR</li>
-            </ul>
-        </section>
-        <section>
-            <h2>NAP Rules</h2>
-            <ul>
-                <li>Respect the NAP agreement by avoiding attacks on listed alliances.</li>
-                <li>Title sharing should be done fairly among all NAP alliances.</li>
-                <li>During SvS events, coordination between NAP members is crucial for maximum effectiveness.</li>
-                <li>SFC battles: Limited to turret PvP for participation rewards; castle rotation between LED and EMA.</li>
-            </ul>
-        </section>
-        <section>
-            <h2>Current Server Time</h2>
-            <p id="localTime" class="time-display">Local Time: Loading...</p>
-            <p id="utcTime" class="time-display">UTC Time: Loading...</p>
-        </section>
-        <section>
-            <h2>Rainbow Text Generator</h2>
-            <label for="rainbowInput">Enter text:</label>
-            <input type="text" id="rainbowInput" placeholder="Type something...">
-            <p id="rainbowOutput" class="rainbow"></p>
-        </section>
-    </main>
-    <footer>
-        <p>Managed by LED Leadership</p>
-    </footer>
+        <p><strong>NAP4 Alliances:</strong> LED, EMA, POL, KOR</p>
+        <p><strong>Minister of the Interior:</strong> Assigned to POL for testing purposes. This will remain under observation to ensure effective title distribution.</p>
+        <h2>NAP Rules</h2>
+        <ul>
+            <li>NAP4 alliances are protected from attacks outside of Killing Events.</li>
+            <li>Title distribution will be shared fairly, with POL managing the Minister of the Interior role for now.</li>
+            <li>During SvS, collaboration among NAP alliances is encouraged to strengthen server performance.</li>
+        </ul>
+        <h2>Rainbow Text Generator</h2>
+        <p>Enter your message below to generate colorful text in BB code for in-game chat:</p>
+        <textarea id="inputText" placeholder="Enter your message here..."></textarea>
+        <button onclick="generateRainbowText()">Generate Rainbow Text</button>
+        <textarea id="outputText" readonly placeholder="Your BB code will appear here..."></textarea>
+    </div>
     <script>
-        function updateTime() {
-            const now = new Date();
+        function generateRainbowText() {
+            const input = document.getElementById('inputText').value;
+            const colors = ['ff0000', 'ff7f00', 'ffff00', '00ff00', '0000ff', '4b0082', '8b00ff'];
+            let colorIndex = 0;
+            let result = '';
 
-            // Local time
-            const localTime = now.toLocaleString();
-            document.getElementById('localTime').textContent = `Local Time: ${localTime}`;
+            for (let char of input) {
+                if (char.trim() === '') {
+                    result += char;
+                } else {
+                    result += `<color=#${colors[colorIndex]}><b>${char}</b></color>`;
+                    colorIndex = (colorIndex + 1) % colors.length;
+                }
+            }
 
-            // UTC time
-            const utcTime = now.toUTCString();
-            document.getElementById('utcTime').textContent = `UTC Time: ${utcTime}`;
+            document.getElementById('outputText').value = result;
         }
-
-        setInterval(updateTime, 1000);
-
-        const rainbowInput = document.getElementById('rainbowInput');
-        const rainbowOutput = document.getElementById('rainbowOutput');
-
-        rainbowInput.addEventListener('input', () => {
-            rainbowOutput.textContent = rainbowInput.value;
-        });
     </script>
 </body>
 </html>
