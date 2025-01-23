@@ -50,6 +50,8 @@
             color: #555;
             border-bottom: 1px solid #ccc;
             padding-bottom: 10px;
+            padding-left: 10px;
+            padding-right: 10px;
         }
         @media (max-width: 600px) {
             .container {
@@ -64,8 +66,8 @@
 </head>
 <body>
     <div class="time-display">
-        <p>UTC Time: <span id="utcTime"></span></p>
-        <p>Local Server Time: <span id="localTime"></span></p>
+        <p>UTC Server Time: <span id="utcTime"></span></p>
+        <p>Local Time: <span id="localTime"></span></p>
     </div>
     <div class="container">
         <h1>Server NAP Information</h1>
@@ -97,20 +99,20 @@
         setInterval(updateTime, 1000);
 
         function generateRainbowText() {
-            const input = document.getElementById('inputText').value;
+            const input = document.getElementById('inputText').value.replace(/\s/g, ''); // Remove spaces
             const colors = ['FF0000', 'FF7F00', 'FFFF00', '00FF00', '0000FF', '4B0082', '8B00FF'];
             let colorIndex = 0;
             let result = '';
             let preview = '';
+            let charCount = 0;
 
             for (let char of input) {
-                if (result.length >= 20) break; // Limit to 20 characters
-                if (char.trim() === '') continue; // Skip spaces
-
+                if (charCount >= 20) break; // Limit to 20 characters
                 const color = `#${colors[colorIndex]}`;
                 result += `<color=${color}><b>${char}</b></color>`;
                 preview += `<span style="color:${color}; font-weight:bold;">${char}</span>`;
                 colorIndex = (colorIndex + 1) % colors.length;
+                charCount++;
             }
 
             document.getElementById('outputText').value = result;
