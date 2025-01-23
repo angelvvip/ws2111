@@ -53,6 +53,18 @@
             padding-left: 10px;
             padding-right: 10px;
         }
+        .sliders {
+            display: flex;
+            justify-content: space-between;
+            margin: 10px 0;
+        }
+        .sliders label {
+            flex: 1;
+            margin-right: 10px;
+        }
+        .sliders input {
+            flex: 3;
+        }
         @media (max-width: 600px) {
             .container {
                 padding: 15px;
@@ -60,6 +72,12 @@
             .time-display {
                 flex-direction: column;
                 align-items: center;
+            }
+            .sliders {
+                flex-direction: column;
+            }
+            .sliders label {
+                margin-bottom: 5px;
             }
         }
     </style>
@@ -80,10 +98,18 @@
             <li>During SvS, collaboration among NAP alliances is encouraged to strengthen server performance.</li>
         </ul>
         <h2>Rainbow Text Generator</h2>
-        <p>Enter your message below to generate colorful text in BB code for in-game chat:</p>
+        <p>Enter your message below to generate colorful text in code for in-game chat (it won't work for private messages because you need to @someone):</p>
         <textarea id="inputText" placeholder="Enter your message here..."></textarea>
+        <div class="sliders">
+            <label for="saturation">Saturation:</label>
+            <input type="range" id="saturation" name="saturation" min="0" max="100" value="100">
+        </div>
+        <div class="sliders">
+            <label for="lightness">Lightness:</label>
+            <input type="range" id="lightness" name="lightness" min="0" max="100" value="50">
+        </div>
         <button onclick="generateRainbowText()">Generate Rainbow Text</button>
-        <textarea id="outputText" readonly placeholder="Your BB code will appear here..."></textarea>
+        <textarea id="outputText" readonly placeholder="Your code will appear here..."></textarea>
         <div id="preview" style="margin-top: 10px; text-align: center;"></div>
     </div>
     <script>
@@ -98,20 +124,54 @@
 
         setInterval(updateTime, 1000);
 
+        function hslToHex(h, s, l) {
+            s /= 100;
+            l /= 100;
+            let c = (1 - Math.abs(2 * l - 1)) * s;
+            let x = c * (1 - Math.abs((h / 60) % 2 - 1));
+            let m = l - c / 2;
+            let r = 0, g = 0, b = 0;
+
+            if (0 <= h && h < 60) {
+                r = c; g = x; b = 0;
+            } else if (60 <= h && h < 120) {
+                r = x; g = c; b = 0;
+            } else if (120 <= h && h < 180) {
+                r = 0; g = c; b = x;
+            } else if (180 <= h && h < 240) {
+                r = 0; g = x; b = c;
+            } else if (240 <= h && h < 300) {
+                r = x; g = 0; b = c;
+            } else if (300 <= h && h < 360) {
+                r = c; g = 0; b = x;
+            }
+
+            r = Math.round((r + m) * 255).toString(16).padStart(2, '0').toUpperCase();
+            g = Math.round((g + m) * 255).toString(16).padStart(2, '0').toUpperCase();
+            b = Math.round((b + m) * 255).toString(16).padStart(2, '0').toUpperCase();
+
+            return `#${r}${g}${b}`;
+        }
+
         function generateRainbowText() {
-            const input = document.getElementById('inputText').value.replace(/\s/g, ''); // Remove spaces
-            const colors = ['FF0000', 'FF7F00', 'FFFF00', '00FF00', '0000FF', '4B0082', '8B00FF'];
+            let input = document.getElementById('inputText').value;
+            const saturation = document.getElementById('saturation').value;
+            const lightness = document.getElementById('lightness').value;
             let colorIndex = 0;
             let result = '';
             let preview = '';
             let charCount = 0;
 
+            // Remove special characters, punctuation, and spaces
+            input = input.replace(/[^\w]|_/g, "");
+
             for (let char of input) {
                 if (charCount >= 20) break; // Limit to 20 characters
-                const color = `#${colors[colorIndex]}`;
-                result += `<color=${color}><b>${char}</b></color>`;
+                const hue = (colorIndex * 360 / 7) % 360;
+                const color = hslToHex(hue, saturation, lightness);
+                result += `<color=${color}>${char}</color>`;
                 preview += `<span style="color:${color}; font-weight:bold;">${char}</span>`;
-                colorIndex = (colorIndex + 1) % colors.length;
+                colorIndex = (colorIndex + 1) % 7;
                 charCount++;
             }
 
