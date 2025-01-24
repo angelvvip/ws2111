@@ -8,16 +8,13 @@ body {
 }
 .logo {
     text-align: center;
-    margin: 20px 0;
-    padding: 10px;
+    margin: 10px 0; /* Reduced top and bottom margin */
+    padding: 0;
 }
 .logo img {
     width: 80%; /* Adjusted for smaller size */
     max-width: 616px;
     height: auto;
-    padding: 10px;
-    border: 1px solid #ccc; /* Optional: add a border for a nicer look */
-    border-radius: 8px; /* Optional: add rounded corners */
 }
 .container {
     max-width: 800px;
@@ -54,8 +51,8 @@ button:hover {
     font-size: 0.9em;
     color: white;
     background-color: black; /* Changed line color to black */
-    padding: 5px 0; /* Reduced padding */
-    margin: 10px 0; /* Reduced margin */
+    padding: 3px 0; /* Reduced padding */
+    margin: 5px 0; /* Reduced margin */
 }
 .sliders {
     display: flex;
