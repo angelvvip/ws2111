@@ -66,6 +66,20 @@ button:hover {
 .sliders input {
     flex: 3;
 }
+.nap-rules-button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.nap-rules-button:hover {
+    background-color: #218838;
+}
 @media (max-width: 600px) {
     .container {
         padding: 15px;
