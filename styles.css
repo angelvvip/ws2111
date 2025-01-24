@@ -66,7 +66,7 @@ button:hover {
 .sliders input {
     flex: 3;
 }
-.nap-rules-button {
+.nap-rules-button, .back-button {
     display: block;
     width: 100%;
     padding: 10px;
@@ -77,7 +77,7 @@ button:hover {
     border-radius: 4px;
     cursor: pointer;
 }
-.nap-rules-button:hover {
+.nap-rules-button:hover, .back-button:hover {
     background-color: #218838;
 }
 @media (max-width: 600px) {
