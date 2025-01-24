@@ -80,6 +80,23 @@ button:hover {
 .nap-rules-button:hover, .back-button:hover {
     background-color: #218838;
 }
+.copy-button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.copy-button:hover {
+    background-color: #5a6268;
+}
+#outputText {
+    height: 150px; /* Increased height for easier copying */
+}
 @media (max-width: 600px) {
     .container {
         padding: 15px;

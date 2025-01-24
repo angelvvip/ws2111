@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Server NAP Information</title>
+    <title>NAP Info</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -14,8 +14,8 @@
         <p>Server 2111 | UTC Time: <span id="utcTime"></span></p>
     </div>
     <div class="container">
-        <h1>Server NAP Information</h1>
-        <button class="nap-rules-button" onclick="window.location.href='nap-rules.html'">NAP Rules</button>
+        <h2>NAP info read below</h2>
+        <button class="nap-rules-button" onclick="window.location.href='nap-rules.html'">Click me to read</button>
         <h2>Rainbow Text Generator</h2>
         <p>Enter your message below to generate colorful text in code for in-game chat (it won't work for private messages because you need to @someone):</p>
         <textarea id="inputText" placeholder="Enter your message here..."></textarea>
@@ -29,6 +29,7 @@
         </div>
         <button onclick="generateRainbowText()">Generate Rainbow Text</button>
         <textarea id="outputText" readonly placeholder="Your code will appear here..."></textarea>
+        <button class="copy-button" onclick="copyToClipboard()">Copy to Clipboard</button>
         <div id="preview" style="margin-top: 10px; text-align: center;"></div>
     </div>
     <script src="script.js"></script>

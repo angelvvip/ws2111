@@ -58,5 +58,13 @@ function generateRainbowText() {
     document.getElementById('preview').innerHTML = preview;
 }
 
+function copyToClipboard() {
+    const outputText = document.getElementById('outputText');
+    outputText.select();
+    outputText.setSelectionRange(0, 99999); // For mobile devices
+    document.execCommand("copy");
+    alert("Copied to clipboard");
+}
+
 updateTime();
 setInterval(updateTime, 1000);
