@@ -4,88 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Server NAP Information</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            line-height: 1.6;
-            color: #333;
-            background-color: #f9f9f9;
-        }
-        .container {
-            max-width: 800px;
-            margin: 20px auto;
-            padding: 20px;
-            background: #fff;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-        }
-        h1, h2 {
-            text-align: center;
-            color: #444;
-        }
-        textarea, input, button {
-            width: 100%;
-            margin-top: 10px;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
-        button {
-            background-color: #007BFF;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
-        .time-display {
-            display: flex;
-            justify-content: space-between;
-            margin: 20px 0;
-            font-size: 1.2em;
-            color: #555;
-            border-bottom: 1px solid #ccc;
-            padding-bottom: 10px;
-            padding-left: 10px;
-            padding-right: 10px;
-        }
-        .sliders {
-            display: flex;
-            justify-content: space-between;
-            margin: 10px 0;
-        }
-        .sliders label {
-            flex: 1;
-            margin-right: 10px;
-        }
-        .sliders input {
-            flex: 3;
-        }
-        @media (max-width: 600px) {
-            .container {
-                padding: 15px;
-            }
-            .time-display {
-                flex-direction: column;
-                align-items: center;
-            }
-            .sliders {
-                flex-direction: column;
-            }
-            .sliders label {
-                margin-bottom: 5px;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="time-display">
         <p>UTC Server Time: <span id="utcTime"></span></p>
-        <p>Local Time: <span id="localTime"></span></p>
     </div>
     <div class="container">
         <h1>Server NAP Information</h1>
@@ -112,73 +35,6 @@
         <textarea id="outputText" readonly placeholder="Your code will appear here..."></textarea>
         <div id="preview" style="margin-top: 10px; text-align: center;"></div>
     </div>
-    <script>
-        function updateTime() {
-            const now = new Date();
-            const utcTime = now.toUTCString().split(' ')[4];
-            const localTime = now.toLocaleTimeString();
-
-            document.getElementById('localTime').innerText = localTime;
-            document.getElementById('utcTime').innerText = utcTime;
-        }
-
-        setInterval(updateTime, 1000);
-
-        function hslToHex(h, s, l) {
-            s /= 100;
-            l /= 100;
-            let c = (1 - Math.abs(2 * l - 1)) * s;
-            let x = c * (1 - Math.abs((h / 60) % 2 - 1));
-            let m = l - c / 2;
-            let r = 0, g = 0, b = 0;
-
-            if (0 <= h && h < 60) {
-                r = c; g = x; b = 0;
-            } else if (60 <= h && h < 120) {
-                r = x; g = c; b = 0;
-            } else if (120 <= h && h < 180) {
-                r = 0; g = c; b = x;
-            } else if (180 <= h && h < 240) {
-                r = 0; g = x; b = c;
-            } else if (240 <= h && h < 300) {
-                r = x; g = 0; b = c;
-            } else if (300 <= h && h < 360) {
-                r = c; g = 0; b = x;
-            }
-
-            r = Math.round((r + m) * 255).toString(16).padStart(2, '0').toUpperCase();
-            g = Math.round((g + m) * 255).toString(16).padStart(2, '0').toUpperCase();
-            b = Math.round((b + m) * 255).toString(16).padStart(2, '0').toUpperCase();
-
-            return `#${r}${g}${b}`;
-        }
-
-        function generateRainbowText() {
-            let input = document.getElementById('inputText').value;
-            const saturation = document.getElementById('saturation').value;
-            const lightness = document.getElementById('lightness').value;
-            let result = '';
-            let preview = '';
-            let charCount = 0;
-
-            // Remove special characters, punctuation, and spaces
-            input = input.replace(/[^\w]|_/g, "");
-
-            const length = input.length;
-            for (let i = 0; i < length && charCount < 20; i++) {
-                const char = input[i];
-                const hue = (i / length) * 360;
-                const color = hslToHex(hue, saturation, lightness);
-                result += `<color=${color}>${char}</color>`;
-                preview += `<span style="color:${color}; font-weight:bold;">${char}</span>`;
-                charCount++;
-            }
-
-            document.getElementById('outputText').value = result;
-            document.getElementById('preview').innerHTML = preview;
-        }
-
-        updateTime();
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
