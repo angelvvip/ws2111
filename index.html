@@ -157,7 +157,6 @@
             let input = document.getElementById('inputText').value;
             const saturation = document.getElementById('saturation').value;
             const lightness = document.getElementById('lightness').value;
-            let colorIndex = 0;
             let result = '';
             let preview = '';
             let charCount = 0;
@@ -165,13 +164,13 @@
             // Remove special characters, punctuation, and spaces
             input = input.replace(/[^\w]|_/g, "");
 
-            for (let char of input) {
-                if (charCount >= 20) break; // Limit to 20 characters
-                const hue = (colorIndex * 360 / 7) % 360;
+            const length = input.length;
+            for (let i = 0; i < length && charCount < 20; i++) {
+                const char = input[i];
+                const hue = (i / length) * 360;
                 const color = hslToHex(hue, saturation, lightness);
                 result += `<color=${color}>${char}</color>`;
                 preview += `<span style="color:${color}; font-weight:bold;">${char}</span>`;
-                colorIndex = (colorIndex + 1) % 7;
                 charCount++;
             }
 
